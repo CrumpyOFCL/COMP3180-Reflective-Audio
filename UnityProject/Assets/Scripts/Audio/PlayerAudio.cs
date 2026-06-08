@@ -5,14 +5,18 @@ public class PlayerAudio : MonoBehaviour
 {
     #region - Audio Sources -
 
-    private AudioSource walkSource;
-    private AudioSource oneShotSource;
+    [Header("Audio Sources")]
+    [Tooltip("Looping source used for footsteps. Assign in Inspector and set its Output to your mixer group.")]
+    [SerializeField] private AudioSource walkSource;
+    [Tooltip("One-shot source used for jump/dash/shoot/time-switch. Assign in Inspector and set its Output to your mixer group.")]
+    [SerializeField] private AudioSource oneShotSource;
 
     #endregion
 
-    #region - Mixer -
+    #region - Mixer (optional) -
 
-    [Header("Mixer")]
+    [Header("Mixer (optional fallback)")]
+    [Tooltip("Only used if the sources above don't already have an Output assigned.")]
     [SerializeField] private AudioMixerGroup playerSFXGroup;
 
     #endregion
@@ -78,21 +82,25 @@ public class PlayerAudio : MonoBehaviour
 
     private void Awake()
     {
-        walkSource = gameObject.AddComponent<AudioSource>();
-        walkSource.loop = true;
-        walkSource.playOnAwake = false;
-        walkSource.spatialBlend = 0f;
+        // Fallback: create sources only if they weren't assigned in the Inspector.
+        if (walkSource == null)
+            walkSource = gameObject.AddComponent<AudioSource>();
+        if (oneShotSource == null)
+            oneShotSource = gameObject.AddComponent<AudioSource>();
 
-        oneShotSource = gameObject.AddComponent<AudioSource>();
-        oneShotSource.loop = false;
-        oneShotSource.playOnAwake = false;
-        oneShotSource.spatialBlend = 0f;
+        ConfigureSource(walkSource, loop: true);
+        ConfigureSource(oneShotSource, loop: false);
+    }
 
-        if (playerSFXGroup != null)
-        {
-            walkSource.outputAudioMixerGroup = playerSFXGroup;
-            oneShotSource.outputAudioMixerGroup = playerSFXGroup;
-        }
+    private void ConfigureSource(AudioSource source, bool loop)
+    {
+        source.loop = loop;
+        source.playOnAwake = false;
+        source.spatialBlend = 0f;
+
+        // Only override the output if the source doesn't already have one set in the Inspector.
+        if (source.outputAudioMixerGroup == null && playerSFXGroup != null)
+            source.outputAudioMixerGroup = playerSFXGroup;
     }
 
     public void UpdateWalking(bool grounded, bool moving)
@@ -138,36 +146,20 @@ public class PlayerAudio : MonoBehaviour
 
     public void PlayDash()
     {
-        if (dashClip != null)
-        {
-            oneShotSource.pitch = dashPitch;
-            oneShotSource.PlayOneShot(dashClip, dashVolume);
-        }
+        PlayClip(dashClip, dashVolume, dashPitch);
     }
-
 
     public void PlayShoot()
     {
-        if (shootClip != null)
-        {
-            oneShotSource.pitch = shootPitch;
-            oneShotSource.PlayOneShot(shootClip, shootVolume);
-        }
+        PlayClip(shootClip, shootVolume, shootPitch);
     }
-
 
     public void PlayTimeSwitch(bool switchingToPast)
     {
-        if (switchingToPast && switchToPastClip != null)
-        {
-            oneShotSource.pitch = switchToPastPitch;
-            oneShotSource.PlayOneShot(switchToPastClip, switchToPastVolume);
-        }
-        else if (!switchingToPast && switchToPresentClip != null)
-        {
-            oneShotSource.pitch = switchToPresentPitch;
-            oneShotSource.PlayOneShot(switchToPresentClip, switchToPresentVolume);
-        }
+        if (switchingToPast)
+            PlayClip(switchToPastClip, switchToPastVolume, switchToPastPitch);
+        else
+            PlayClip(switchToPresentClip, switchToPresentVolume, switchToPresentPitch);
     }
 
     public void PlaySwitchFail()
@@ -181,6 +173,5 @@ public class PlayerAudio : MonoBehaviour
 
         oneShotSource.pitch = pitch;
         oneShotSource.PlayOneShot(clip, volume);
-
     }
 }
