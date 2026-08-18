@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -6,8 +8,6 @@ public class PlayerAudio : MonoBehaviour
     #region - Audio Sources -
 
     [Header("Audio Sources")]
-    [Tooltip("Looping source used for footsteps. Assign in Inspector and set its Output to your mixer group.")]
-    [SerializeField] private AudioSource walkSource;
     [Tooltip("One-shot source used for jump/dash/shoot/time-switch. Assign in Inspector and set its Output to your mixer group.")]
     [SerializeField] private AudioSource oneShotSource;
 
@@ -21,12 +21,22 @@ public class PlayerAudio : MonoBehaviour
 
     #endregion
 
-    #region - Walking -
+    #region - Footsteps (FMOD) -
 
-    [Header("Walking")]
-    [SerializeField] private AudioClip walkClip;
-    [Range(0f, 1f)][SerializeField] private float walkVolume = 0.5f;
-    [Range(0.1f, 3f)][SerializeField] private float walkPitch = 1f;
+    [Header("Footsteps (FMOD)")]
+    [SerializeField] private EventReference footstepEvent;
+
+    [Tooltip("Horizontal distance travelled between steps. Tune against the walk animation's foot plants.")]
+    [SerializeField] private float stepDistance = 0.9f;
+
+    [Tooltip("Layers to probe for a SurfaceType. Include all three era layers plus Solid - inactive eras are filtered out automatically.")]
+    [SerializeField] private LayerMask groundLayers;
+
+    [Tooltip("How far below the player to look for the surface.")]
+    [SerializeField] private float surfaceProbeDistance = 1.5f;
+
+    [Tooltip("Used when the ground has no SurfaceType. Must match a label on the FMOD Surface parameter.")]
+    [SerializeField] private string defaultSurface = "Stone";
 
     #endregion
 
@@ -78,17 +88,16 @@ public class PlayerAudio : MonoBehaviour
 
 
     private bool isWalking;
+    private float distanceSinceStep;
+    private float lastStepX;
 
 
     private void Awake()
     {
-        // Fallback: create sources only if they weren't assigned in the Inspector.
-        if (walkSource == null)
-            walkSource = gameObject.AddComponent<AudioSource>();
+        // Fallback: create the source only if it wasn't assigned in the Inspector.
         if (oneShotSource == null)
             oneShotSource = gameObject.AddComponent<AudioSource>();
 
-        ConfigureSource(walkSource, loop: true);
         ConfigureSource(oneShotSource, loop: false);
     }
 
@@ -103,31 +112,67 @@ public class PlayerAudio : MonoBehaviour
             source.outputAudioMixerGroup = playerSFXGroup;
     }
 
+    // Steps are driven by distance travelled rather than animation events, so they
+    // stay in sync at any movement speed and simply stop when there is no ground.
     public void UpdateWalking(bool grounded, bool moving)
     {
-        bool shouldWalk = grounded && moving;
-
-        if (shouldWalk && !isWalking)
-            StartWalking();
-        else if (!shouldWalk && isWalking)
+        if (!grounded || !moving)
+        {
             StopWalking();
-    }
+            return;
+        }
 
-    private void StartWalking()
-    {
-        if (walkClip == null) return;
+        if (!isWalking)
+        {
+            isWalking = true;
+            lastStepX = transform.position.x;
 
-        isWalking = true;
-        walkSource.clip = walkClip;
-        walkSource.volume = walkVolume;
-        walkSource.pitch = walkPitch;
-        walkSource.Play();
+            // Land the first step immediately rather than half a stride late.
+            distanceSinceStep = stepDistance;
+        }
+
+        distanceSinceStep += Mathf.Abs(transform.position.x - lastStepX);
+        lastStepX = transform.position.x;
+
+        if (distanceSinceStep < stepDistance) return;
+
+        distanceSinceStep = 0f;
+        PlayFootstep();
     }
 
     public void StopWalking()
     {
         isWalking = false;
-        walkSource.Stop();
+        distanceSinceStep = 0f;
+    }
+
+    private void PlayFootstep()
+    {
+        if (footstepEvent.IsNull) return;
+
+        EventInstance step = RuntimeManager.CreateInstance(footstepEvent);
+        step.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+        step.setParameterByNameWithLabel("Surface", DetectSurface());
+        step.start();
+
+        // Released instances are cleaned up by FMOD once the one-shot finishes.
+        step.release();
+    }
+
+    private string DetectSurface()
+    {
+        int mask = groundLayers.value;
+
+        // Never sample a floor belonging to an era we are not standing in.
+        if (TimeSingleton.Instance != null)
+            mask &= ~TimeSingleton.Instance.InactiveEraMask.value;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, surfaceProbeDistance, mask);
+
+        if (hit.collider == null) return defaultSurface;
+
+        SurfaceType surface = hit.collider.GetComponentInParent<SurfaceType>();
+        return surface != null ? surface.SurfaceLabel : defaultSurface;
     }
 
     public void PlayJump(int jumpCount)
