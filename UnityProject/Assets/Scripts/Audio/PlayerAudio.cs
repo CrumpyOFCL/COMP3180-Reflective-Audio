@@ -1,29 +1,12 @@
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
-using UnityEngine.Audio;
 
+// All player sound now runs through FMOD. Every method here is a facade the rest
+// of the game calls without knowing what the backend is.
 public class PlayerAudio : MonoBehaviour
 {
-    #region - Audio Sources -
-
-    [Header("Audio Sources")]
-    [Tooltip("One-shot source used for jump/dash/shoot/time-switch. Assign in Inspector and set its Output to your mixer group.")]
-    [SerializeField] private AudioSource oneShotSource;
-
-    #endregion
-
-    #region - Mixer (optional) -
-
-    [Header("Mixer (optional fallback)")]
-    [Tooltip("Only used if the sources above don't already have an Output assigned.")]
-    [SerializeField] private AudioMixerGroup playerSFXGroup;
-
-    #endregion
-
-    #region - Footsteps (FMOD) -
-
-    [Header("Footsteps (FMOD)")]
+    [Header("Footsteps")]
     [SerializeField] private EventReference footstepEvent;
 
     [Tooltip("Horizontal distance travelled between steps. Tune against the walk animation's foot plants.")]
@@ -38,79 +21,26 @@ public class PlayerAudio : MonoBehaviour
     [Tooltip("Used when the ground has no SurfaceType. Must match a label on the FMOD Surface parameter.")]
     [SerializeField] private string defaultSurface = "Stone";
 
-    #endregion
+    [Header("Movement")]
+    [Tooltip("Labelled parameter 'JumpType' with labels First and Double.")]
+    [SerializeField] private EventReference jumpEvent;
+    [SerializeField] private EventReference dashEvent;
 
-    #region - Jumping -
+    [Header("Combat")]
+    [SerializeField] private EventReference shootEvent;
 
-    [Header("Jumping")]
-    [SerializeField] private AudioClip jumpClip;
-    [Range(0f, 1f)][SerializeField] private float jumpVolume = 0.7f;
-    [Range(0.1f, 3f)][SerializeField] private float jumpPitch = 1f;
-    [SerializeField] private AudioClip doubleJumpClip;
-    [Range(0f, 1f)][SerializeField] private float doubleJumpVolume = 0.7f;
-    [Range(0.1f, 3f)][SerializeField] private float doubleJumpPitch = 1f;
-
-    #endregion
-
-    #region - Dashing -
-
-    [Header("Dashing")]
-    [SerializeField] private AudioClip dashClip;
-    [Range(0f, 1f)][SerializeField] private float dashVolume = 0.7f;
-    [Range(0.1f, 3f)][SerializeField] private float dashPitch = 1f;
-
-    #endregion
-
-    #region - Shooting -
-
-    [Header("Shooting")]
-    [SerializeField] private AudioClip shootClip;
-    [Range(0f, 1f)][SerializeField] private float shootVolume = 0.7f;
-    [Range(0.1f, 3f)][SerializeField] private float shootPitch = 1f;
-
-    #endregion
-
-    #region - Time Switch -
-
-    [Header("Time Switch")]
-    [SerializeField] private AudioClip switchToPastClip;
-    [Range(0f, 1f)][SerializeField] private float switchToPastVolume = 0.7f;
-    [Range(0.1f, 3f)][SerializeField] private float switchToPastPitch = 1f;
-    [SerializeField] private AudioClip switchToPresentClip;
-    [Range(0f, 1f)][SerializeField] private float switchToPresentVolume = 0.7f;
-    [Range(0.1f, 3f)][SerializeField] private float switchToPresentPitch = 1f;
-    [Header("Time Switch Fail")]
-    [SerializeField] private AudioClip switchFailClip;
-    [Range(0f, 1f)][SerializeField] private float switchFailVolume = 0.5f;
-    [Range(0.1f, 3f)][SerializeField] private float switchFailPitch = 1f;
-
-    #endregion
-
+    [Header("Time")]
+    [Tooltip("Labelled parameter 'Era' with labels Past, Present and Future.")]
+    [SerializeField] private EventReference timeSwitchEvent;
+    [SerializeField] private EventReference switchFailEvent;
+    [SerializeField] private EventReference crushEvent;
 
     private bool isWalking;
     private float distanceSinceStep;
     private float lastStepX;
 
 
-    private void Awake()
-    {
-        // Fallback: create the source only if it wasn't assigned in the Inspector.
-        if (oneShotSource == null)
-            oneShotSource = gameObject.AddComponent<AudioSource>();
-
-        ConfigureSource(oneShotSource, loop: false);
-    }
-
-    private void ConfigureSource(AudioSource source, bool loop)
-    {
-        source.loop = loop;
-        source.playOnAwake = false;
-        source.spatialBlend = 0f;
-
-        // Only override the output if the source doesn't already have one set in the Inspector.
-        if (source.outputAudioMixerGroup == null && playerSFXGroup != null)
-            source.outputAudioMixerGroup = playerSFXGroup;
-    }
+    #region - Footsteps -
 
     // Steps are driven by distance travelled rather than animation events, so they
     // stay in sync at any movement speed and simply stop when there is no ground.
@@ -137,8 +67,9 @@ public class PlayerAudio : MonoBehaviour
         if (distanceSinceStep < stepDistance) return;
 
         distanceSinceStep = 0f;
-        PlayFootstep();
+        PlayWithLabel(footstepEvent, "Surface", DetectSurface());
     }
+
 
     public void StopWalking()
     {
@@ -146,18 +77,6 @@ public class PlayerAudio : MonoBehaviour
         distanceSinceStep = 0f;
     }
 
-    private void PlayFootstep()
-    {
-        if (footstepEvent.IsNull) return;
-
-        EventInstance step = RuntimeManager.CreateInstance(footstepEvent);
-        step.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
-        step.setParameterByNameWithLabel("Surface", DetectSurface());
-        step.start();
-
-        // Released instances are cleaned up by FMOD once the one-shot finishes.
-        step.release();
-    }
 
     private string DetectSurface()
     {
@@ -175,48 +94,72 @@ public class PlayerAudio : MonoBehaviour
         return surface != null ? surface.SurfaceLabel : defaultSurface;
     }
 
+    #endregion
+
+
+    #region - One Shots -
+
     public void PlayJump(int jumpCount)
     {
-        if (jumpCount <= 0 && jumpClip != null)
-        {
-            oneShotSource.pitch = jumpPitch;
-            oneShotSource.PlayOneShot(jumpClip, jumpVolume);
-        }
-        else if (jumpCount > 0 && doubleJumpClip != null)
-        {
-            oneShotSource.pitch = doubleJumpPitch;
-            oneShotSource.PlayOneShot(doubleJumpClip, doubleJumpVolume);
-        }
+        PlayWithLabel(jumpEvent, "JumpType", jumpCount <= 0 ? "First" : "Double");
     }
+
 
     public void PlayDash()
     {
-        PlayClip(dashClip, dashVolume, dashPitch);
+        Play(dashEvent);
     }
+
 
     public void PlayShoot()
     {
-        PlayClip(shootClip, shootVolume, shootPitch);
+        Play(shootEvent);
     }
 
-    public void PlayTimeSwitch(bool switchingToPast)
+
+    // Takes the era rather than a bool, so the Future gets its own sound instead
+    // of borrowing the Present's.
+    public void PlayTimeSwitch(TimeSingleton.GameState era)
     {
-        if (switchingToPast)
-            PlayClip(switchToPastClip, switchToPastVolume, switchToPastPitch);
-        else
-            PlayClip(switchToPresentClip, switchToPresentVolume, switchToPresentPitch);
+        PlayWithLabel(timeSwitchEvent, "Era", era.ToString());
     }
+
 
     public void PlaySwitchFail()
     {
-        PlayClip(switchFailClip, switchFailVolume, switchFailPitch);
+        Play(switchFailEvent);
     }
 
-    private void PlayClip(AudioClip clip, float volume, float pitch)
-    {
-        if (clip == null) return;
 
-        oneShotSource.pitch = pitch;
-        oneShotSource.PlayOneShot(clip, volume);
+    // Detached: it must keep playing through the respawn that follows.
+    public void PlayCrush()
+    {
+        if (crushEvent.IsNull) return;
+
+        RuntimeManager.PlayOneShot(crushEvent, transform.position);
+    }
+
+    #endregion
+
+
+    private void Play(EventReference reference)
+    {
+        if (reference.IsNull) return;
+
+        RuntimeManager.PlayOneShotAttached(reference, gameObject);
+    }
+
+
+    private void PlayWithLabel(EventReference reference, string parameter, string label)
+    {
+        if (reference.IsNull) return;
+
+        EventInstance instance = RuntimeManager.CreateInstance(reference);
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+        instance.setParameterByNameWithLabel(parameter, label);
+        instance.start();
+
+        // Released instances are cleaned up by FMOD once the one-shot finishes.
+        instance.release();
     }
 }
