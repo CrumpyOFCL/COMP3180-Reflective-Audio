@@ -538,8 +538,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../../FMODAudio/ACIT Audio/ACIT Audio.fspro
-  sourceBankPath: ../../../FMODAudio/ACIT Audio/Build
+  sourceProjectPath: Assets/FMOD/ACIT Audio/ACIT Audio.fspro
+  sourceBankPath: Assets/FMOD/ACIT Audio/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -547,7 +547,7 @@ MonoBehaviour:
   BankLoadType: 0
   AutomaticSampleLoading: 0
   EncryptionKey: 
-  ImportType: 1
+  ImportType: 0
   TargetAssetPath: FMODBanks
   TargetBankFolder: 
   EventLinkage: 0
@@ -561,8 +561,7 @@ MonoBehaviour:
   VirtualChannelSettings: []
   RealChannelSettings: []
   Plugins: []
-  MasterBanks:
-  - Master
+  MasterBanks: []
   Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264
