@@ -58,6 +58,7 @@ MonoBehaviour:
     Plugins:
       Value:
       - fmod_haptics
+      - phonon_fmod
       HasValue: 1
     StaticPlugins:
       Value: []
@@ -538,8 +539,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: Assets/FMOD/ACIT Audio/ACIT Audio.fspro
-  sourceBankPath: Assets/FMOD/ACIT Audio/Build
+  sourceProjectPath: ../../../ACIT Audio-20260906T184306Z-1-001/ACIT Audio/ACIT Audio.fspro
+  sourceBankPath: ../../../ACIT Audio-20260906T184306Z-1-001/ACIT Audio/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -561,7 +562,8 @@ MonoBehaviour:
   VirtualChannelSettings: []
   RealChannelSettings: []
   Plugins: []
-  MasterBanks: []
+  MasterBanks:
+  - Master
   Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264
