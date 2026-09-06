@@ -58,7 +58,6 @@ MonoBehaviour:
     Plugins:
       Value:
       - fmod_haptics
-      - phonon_fmod
       HasValue: 1
     StaticPlugins:
       Value: []
