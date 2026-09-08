@@ -182,8 +182,8 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     SampleRate:
-      Value: 0
-      HasValue: 0
+      Value: 48000
+      HasValue: 1
     BuildDirectory:
       Value: 
       HasValue: 0
@@ -539,7 +539,7 @@ MonoBehaviour:
   HasSourceProject: 0
   HasPlatforms: 0
   sourceProjectPath: ../../../ACIT Audio-20260906T184306Z-1-001/ACIT Audio/ACIT Audio.fspro
-  sourceBankPath: Assets/FMODBanks/Desktop
+  sourceBankPath: FMOD/Desktop
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -547,10 +547,10 @@ MonoBehaviour:
   BankLoadType: 0
   AutomaticSampleLoading: 0
   EncryptionKey: 
-  ImportType: 1
+  ImportType: 0
   TargetAssetPath: FMODBanks
   TargetBankFolder: 
-  EventLinkage: 1
+  EventLinkage: 0
   SerializeGUIDsOnly: 0
   LoggingLevel: 2
   SpeakerModeSettings: []
