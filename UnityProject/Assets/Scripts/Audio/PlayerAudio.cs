@@ -26,11 +26,22 @@ public class PlayerAudio : MonoBehaviour
     [SerializeField] private EventReference jumpEvent;
     [SerializeField] private EventReference dashEvent;
 
+    [Tooltip("Takes the same 'Surface' parameter as footsteps, plus a continuous " +
+             "'FallSpeed' so a long drop lands harder than a hop.")]
+    [SerializeField] private EventReference landEvent;
+
+    [Tooltip("Falls slower than this make no sound at all - stepping off a kerb shouldn't thud.")]
+    [SerializeField] private float minLandingSpeed = 2f;
+
+    [Tooltip("Fall speed that maps to FallSpeed = 1. Anything faster is clamped.")]
+    [SerializeField] private float maxLandingSpeed = 20f;
+
     [Header("Combat")]
     [SerializeField] private EventReference shootEvent;
 
     [Header("Time")]
-    [Tooltip("Labelled parameter 'Era' with labels Past, Present and Future.")]
+    [Tooltip("Labelled parameter 'Era' with labels Past, Present and Future, and " +
+             "'Direction' with labels Forward and Backward.")]
     [SerializeField] private EventReference timeSwitchEvent;
     [SerializeField] private EventReference switchFailEvent;
     [SerializeField] private EventReference crushEvent;
@@ -105,6 +116,24 @@ public class PlayerAudio : MonoBehaviour
     }
 
 
+    // fallSpeed is how fast the player was descending on the frame before contact,
+    // as a positive number. The landing zeroes velocity, so it has to be sampled
+    // before the ground check rather than read here.
+    public void PlayLanding(float fallSpeed)
+    {
+        if (landEvent.IsNull || fallSpeed < minLandingSpeed) return;
+
+        float weight = Mathf.InverseLerp(minLandingSpeed, maxLandingSpeed, fallSpeed);
+
+        EventInstance instance = RuntimeManager.CreateInstance(landEvent);
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+        instance.setParameterByNameWithLabel("Surface", DetectSurface());
+        instance.setParameterByName("FallSpeed", weight);
+        instance.start();
+        instance.release();
+    }
+
+
     public void PlayDash()
     {
         Play(dashEvent);
@@ -118,10 +147,18 @@ public class PlayerAudio : MonoBehaviour
 
 
     // Takes the era rather than a bool, so the Future gets its own sound instead
-    // of borrowing the Present's.
-    public void PlayTimeSwitch(TimeSingleton.GameState era)
+    // of borrowing the Present's. Direction is +1 for a step forward through the
+    // eras and -1 for a step back, including the wrap at either end.
+    public void PlayTimeSwitch(TimeSingleton.GameState era, int direction)
     {
-        PlayWithLabel(timeSwitchEvent, "Era", era.ToString());
+        if (timeSwitchEvent.IsNull) return;
+
+        EventInstance instance = RuntimeManager.CreateInstance(timeSwitchEvent);
+        instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+        instance.setParameterByNameWithLabel("Era", era.ToString());
+        instance.setParameterByNameWithLabel("Direction", direction >= 0 ? "Forward" : "Backward");
+        instance.start();
+        instance.release();
     }
 
 
