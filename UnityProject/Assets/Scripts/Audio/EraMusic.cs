@@ -21,7 +21,19 @@ public class EraMusic : MonoBehaviour, ITimeSwitchObserver
     [Tooltip("Seconds the Era parameter takes to reach its new value. 0 snaps.")]
     [SerializeField] private float eraBlendSeconds = 1.5f;
 
-    public static EraMusic Instance { get; private set; }
+    private static EraMusic instance;
+
+    // Backed by a field with an explicit null test, so the getter hands back a
+    // real null once the object is destroyed. An auto-property returns a
+    // reference that is only Unity fake-null, which x?.Method() calls straight
+    // through - and that throws MissingReferenceException. It also clears the
+    // stale reference left behind by a previous play session when Reload Domain
+    // is switched off.
+    public static EraMusic Instance
+    {
+        get => instance != null ? instance : null;
+        private set => instance = value;
+    }
 
     private EventInstance music;
     private bool isPlaying;
