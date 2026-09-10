@@ -1,4 +1,4 @@
-using System.Collections;
+using FMODUnity;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
@@ -9,17 +9,11 @@ public class KeyPickupAudio : MonoBehaviour
     [SerializeField] private bool destroyOnPickup = true;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip pickupClip;
-    [Range(0f, 1f)][SerializeField] private float audioVolume = 0.7f;
+    [Tooltip("FMOD event. Volume lives on the event and its VCA now, so the old " +
+             "per-object volume slider is gone.")]
+    [SerializeField] private EventReference pickupEvent;
 
     private bool isPickedUp;
-
-    private void Awake()
-    {
-        if (audioSource == null)
-            audioSource = GetComponent<AudioSource>();
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -28,17 +22,12 @@ public class KeyPickupAudio : MonoBehaviour
 
         isPickedUp = true;
 
-        if (audioSource != null && pickupClip != null)
-            audioSource.PlayOneShot(pickupClip, audioVolume);
+        // Detached, so the object can be destroyed immediately instead of being
+        // kept alive for the length of the clip.
+        if (!pickupEvent.IsNull)
+            RuntimeManager.PlayOneShot(pickupEvent, transform.position);
 
         if (destroyOnPickup)
-            StartCoroutine(DestroyAfterSound());
-    }
-
-    private IEnumerator DestroyAfterSound()
-    {
-        float waitTime = pickupClip != null ? pickupClip.length : 0f;
-        yield return new WaitForSeconds(waitTime);
-        Destroy(gameObject);
+            Destroy(gameObject);
     }
 }
