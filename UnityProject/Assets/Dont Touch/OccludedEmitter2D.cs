@@ -41,11 +41,12 @@ namespace ReflectiveAudio2D
         private float timer;
         private ContactFilter2D filter;
         private readonly List<RaycastHit2D> hits = new List<RaycastHit2D>(16);
+        // CHANGED: was allocated inside CalculateOcclusion on every check (GC churn).
+        private readonly List<RaycastHit2D> backHits = new List<RaycastHit2D>(16);
 
         private void Start()
         {
-            var studioListener = FindFirstObjectByType<StudioListener>();
-            if (studioListener != null) listener = studioListener.transform;
+            FindListener();
 
             filter = new ContactFilter2D
             {
@@ -60,13 +61,28 @@ namespace ReflectiveAudio2D
             instance.start();
         }
 
+        // CHANGED: the listener was only looked up once in Start. If the
+        // StudioListener lives in a scene that loads later (e.g. an additive Core
+        // scene) occlusion never ran. Now retried on the check interval.
+        private void FindListener()
+        {
+            var studioListener = FindFirstObjectByType<StudioListener>();
+            if (studioListener != null) listener = studioListener.transform;
+        }
+
         private void Update()
         {
-            if (listener == null || !instance.isValid()) return;
+            if (!instance.isValid()) return;
 
             timer += Time.deltaTime;
             if (timer < checkInterval) return;
             timer = 0f;
+
+            if (listener == null)
+            {
+                FindListener();
+                if (listener == null) return;
+            }
 
             instance.setParameterByName(occlusionParameter, CalculateOcclusion());
         }
@@ -90,7 +106,7 @@ namespace ReflectiveAudio2D
 
             // Cast back from the listener to find where the solid geometry ends,
             // then use the overlap as a thickness estimate.
-            var backHits = new List<RaycastHit2D>(16);
+            backHits.Clear();
             Physics2D.Raycast(target, -dir, filter, backHits, distance);
             if (backHits.Count == 0) return Mathf.Clamp01(count * occlusionPerHit);
 
@@ -104,6 +120,9 @@ namespace ReflectiveAudio2D
         private void OnDestroy()
         {
             if (!instance.isValid()) return;
+            // CHANGED: fully qualified. With both "using FMOD.Studio" and
+            // "using FMODUnity" in scope, bare STOP_MODE is ambiguous (FMODUnity
+            // defines its own STOP_MODE enum) - compile error CS0104.
             instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             instance.release();
         }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using FMODUnity;
 using UnityEngine;
 
 namespace ReflectiveAudio2D
@@ -47,6 +48,11 @@ namespace ReflectiveAudio2D
         [Tooltip("An emitter the participant can trigger to excite the space. " +
                  "Without something sounding, there is nothing to judge.")]
         [SerializeField] private GameObject probeEmitter;
+        [Tooltip("ADDED (FMOD pass): optional FMOD one-shot played at the listener " +
+                 "position instead of toggling probeEmitter. Leave empty to keep the " +
+                 "old behaviour (probeEmitter must then carry a StudioEventEmitter " +
+                 "whose Play Event is Object Enable).")]
+        [SerializeField] private EventReference probeEvent;
         [SerializeField] private KeyCode probeKey = KeyCode.Space;
 
         [Header("Vision blocking")]
@@ -88,8 +94,11 @@ namespace ReflectiveAudio2D
         private void Update()
         {
             if (!running && Input.GetKeyDown(startKey)) BeginRun();
-            if (running && probeEmitter != null && Input.GetKeyDown(probeKey))
-                StartCoroutine(PulseProbe());
+            if (running && Input.GetKeyDown(probeKey))
+            {
+                if (!probeEvent.IsNull) PlayProbeEvent();
+                else if (probeEmitter != null) StartCoroutine(PulseProbe());
+            }
         }
 
         public void BeginRun()
@@ -159,6 +168,13 @@ namespace ReflectiveAudio2D
             SetBlindfold(false);
             Flush();
             Debug.Log("[RoomEstimationTask] Run complete.");
+        }
+
+        private void PlayProbeEvent()
+        {
+            Vector3 pos = listenerRoot != null ? listenerRoot.position : transform.position;
+            pos.z = 0f;
+            RuntimeManager.PlayOneShot(probeEvent, pos);
         }
 
         private IEnumerator PulseProbe()

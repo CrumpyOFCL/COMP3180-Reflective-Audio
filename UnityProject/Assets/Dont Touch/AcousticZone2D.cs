@@ -124,6 +124,8 @@ namespace ReflectiveAudio2D
         private void KillSnapshot()
         {
             if (!snapshot.isValid()) return;
+            // CHANGED: fully qualified - bare STOP_MODE is ambiguous between
+            // FMOD.Studio and FMODUnity (CS0104) with both usings in scope.
             snapshot.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             snapshot.release();
             snapshot.clearHandle();

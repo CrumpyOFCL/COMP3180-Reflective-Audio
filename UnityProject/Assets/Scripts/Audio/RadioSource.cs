@@ -6,8 +6,10 @@ using UnityEngine;
 // and tells it which era it is in so the same broadcast can be clear in the Past,
 // broken up in the Present and dead in the Future.
 //
-// The instance is released in OnDestroy. Without that, every section unload
-// leaves a radio playing somewhere with nothing left to stop it.
+// The instance is stopped AND released in OnDestroy. Without the stop, every
+// section unload leaves a radio playing somewhere with nothing left to stop it:
+// release() alone only frees an instance once it has stopped, and an attached
+// instance merely auto-detaches when its GameObject dies.
 public class RadioSource : MonoBehaviour, ITimeSwitchObserver
 {
     [Header("Event")]
@@ -35,13 +37,18 @@ public class RadioSource : MonoBehaviour, ITimeSwitchObserver
 
     private EventInstance instance;
     private bool isPlaying;
+    private bool observing;
 
 
     private void Start()
     {
-        if (driveEraParameter)
+        // CHANGED: null-checked. TimeSingleton.Instance was dereferenced
+        // unguarded here (NullReferenceException in any scene without it, or if
+        // this Start runs before TimeSingleton's Awake in another scene).
+        if (driveEraParameter && TimeSingleton.Instance != null)
         {
             TimeSingleton.Instance.AddObserver(this);
+            observing = true;
         }
 
         if (playOnStart)
@@ -49,10 +56,27 @@ public class RadioSource : MonoBehaviour, ITimeSwitchObserver
     }
 
 
+    // ADDED: a disabled radio used to keep broadcasting. Pause/resume instead.
+    private void OnEnable()
+    {
+        if (isPlaying && instance.isValid()) instance.setPaused(false);
+    }
+
+
+    private void OnDisable()
+    {
+        if (isPlaying && instance.isValid()) instance.setPaused(true);
+    }
+
+
     private void OnDestroy()
     {
-        if (TimeSingleton.Instance != null)
+        if (observing && TimeSingleton.Instance != null)
             TimeSingleton.Instance.RemoveObserver(this);
+
+        // CHANGED: stop before release - this was the leak described above.
+        if (isPlaying && instance.isValid())
+            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 
         Release();
     }
@@ -138,7 +162,10 @@ public class RadioSource : MonoBehaviour, ITimeSwitchObserver
     private void Release()
     {
         if (instance.isValid())
+        {
             instance.release();
+            instance.clearHandle();   // CHANGED: so isValid() is false afterwards
+        }
 
         isPlaying = false;
     }

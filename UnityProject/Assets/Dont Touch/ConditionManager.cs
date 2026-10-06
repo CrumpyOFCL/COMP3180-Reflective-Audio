@@ -137,7 +137,19 @@ namespace ReflectiveAudio2D
             TryAdd(dynamicReverbBus);
             TryAdd(reflectionsBus);
             TryAdd(steamAudioBus);
-            busesResolved = true;
+
+            // CHANGED: was set true unconditionally, so if the banks were not loaded
+            // yet when Start ran, the buses were never looked up again and the
+            // condition switch silently stopped muting anything. Now retried on the
+            // next SetCondition until every configured bus has been found.
+            busesResolved = AllConfiguredBusesFound();
+        }
+
+        private bool AllConfiguredBusesFound()
+        {
+            foreach (string path in new[] { zoneReverbBus, dynamicReverbBus, reflectionsBus, steamAudioBus })
+                if (!string.IsNullOrEmpty(path) && !buses.ContainsKey(path)) return false;
+            return true;
         }
 
         private void TryAdd(string path)

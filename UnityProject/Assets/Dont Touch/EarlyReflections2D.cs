@@ -71,8 +71,13 @@ namespace ReflectiveAudio2D
 
         private void OnDisable()
         {
+            // CHANGED: skip during quit (RuntimeManager may be gone) and skip taps
+            // with no gain parameter, matching the guard Update already uses.
+            if (!RuntimeManager.IsInitialized || taps == null) return;
+
             foreach (var tap in taps)
-                RuntimeManager.StudioSystem.setParameterByName(tap.gainParameter, 0f);
+                if (!string.IsNullOrEmpty(tap.gainParameter))
+                    RuntimeManager.StudioSystem.setParameterByName(tap.gainParameter, 0f);
         }
 
         private void Update()

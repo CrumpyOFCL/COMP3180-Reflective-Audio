@@ -88,9 +88,16 @@ namespace ReflectiveAudio2D
 
         private void OnDisable()
         {
+            // CHANGED: during application quit the RuntimeManager may already be
+            // torn down; touching StudioSystem then is pointless and can log errors.
+            if (!RuntimeManager.IsInitialized) return;
+
             // Leave no residual reverb behind when this condition is switched off.
             SetGlobal(roomSizeParameter, 0f);
             SetGlobal(enclosureParameter, 0f);
+
+            // CHANGED: Brightness was left at its last value. Back to neutral.
+            if (sampleMaterials) SetGlobal(brightnessParameter, 0.5f);
         }
 
         private void Update()
@@ -137,7 +144,11 @@ namespace ReflectiveAudio2D
 
                     if (sampleMaterials)
                     {
-                        var surface = hit.collider.GetComponent<SurfaceType>();
+                        // CHANGED: explicit global:: - the namespaced
+                        // ReflectiveAudio2D.SurfaceType is retired, and the kept class
+                        // lives in the global namespace. InParent, matching PlayerAudio,
+                        // so a SurfaceType on the tilemap parent of the collider counts.
+                        var surface = hit.collider.GetComponentInParent<global::SurfaceType>();
                         totalReflectivity += surface != null ? surface.Reflectivity : 0.5f;
                     }
                 }
