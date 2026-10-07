@@ -99,6 +99,18 @@ namespace ReflectiveAudio2D
 
         private void StartFade(float from, float to, bool killWhenDone)
         {
+            // Loading a save (e.g. main menu → foyer) can disable parent "AudioZones"
+            // while OnTriggerExit2D still fires. StartCoroutine fails on inactive objects.
+            if (!isActiveAndEnabled || !gameObject.activeInHierarchy)
+            {
+                fadeRoutine = null;
+                if (snapshot.isValid())
+                    snapshot.setParameterByName("Intensity", to);
+                if (killWhenDone)
+                    KillSnapshot();
+                return;
+            }
+
             if (fadeRoutine != null) StopCoroutine(fadeRoutine);
             fadeRoutine = StartCoroutine(Fade(from, to, killWhenDone));
         }

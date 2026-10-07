@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ReflectiveAudio2D
 {
@@ -80,11 +81,34 @@ namespace ReflectiveAudio2D
 
         private void Update()
         {
-            if (Input.GetKeyDown(cycleKey))
+            // Project uses the Input System package (Player Settings: Input System).
+            // UnityEngine.Input.GetKeyDown throws InvalidOperationException in that mode.
+            if (WasPressedThisFrame(cycleKey))
                 SetCondition((AcousticCondition)(((int)current + 1) % 3));
-            else if (Input.GetKeyDown(conditionAKey)) SetCondition(AcousticCondition.ZoneBaseline);
-            else if (Input.GetKeyDown(conditionBKey)) SetCondition(AcousticCondition.RaycastDynamic);
-            else if (Input.GetKeyDown(conditionCKey)) SetCondition(AcousticCondition.SteamAudio);
+            else if (WasPressedThisFrame(conditionAKey)) SetCondition(AcousticCondition.ZoneBaseline);
+            else if (WasPressedThisFrame(conditionBKey)) SetCondition(AcousticCondition.RaycastDynamic);
+            else if (WasPressedThisFrame(conditionCKey)) SetCondition(AcousticCondition.SteamAudio);
+        }
+
+        private static bool WasPressedThisFrame(KeyCode keyCode)
+        {
+            Keyboard keyboard = Keyboard.current;
+            if (keyboard == null) return false;
+
+            Key key = KeyCodeToKey(keyCode);
+            if (key == Key.None) return false;
+
+            return keyboard[key].wasPressedThisFrame;
+        }
+
+        private static Key KeyCodeToKey(KeyCode keyCode)
+        {
+            // Keep serialized KeyCode fields so existing Inspector values stay valid.
+            string name = keyCode.ToString();
+            if (name.StartsWith("Alpha") && name.Length == 6 && char.IsDigit(name[5]))
+                name = "Digit" + name[5];
+
+            return System.Enum.TryParse(name, true, out Key key) ? key : Key.None;
         }
 
         public void SetCondition(AcousticCondition condition)
