@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 // Marks what a floor is made of. The label is handed straight to the FMOD
 // "Surface" parameter, so it must match a label defined in FMOD Studio exactly.
@@ -11,14 +12,22 @@ using UnityEngine;
 // delete that file. Its Reflectivity value lives here now so AcousticProbe2D's
 // Brightness sampling keeps working. Any object that carried the old namespaced
 // component will show "missing script" and must be re-tagged with this one.
+//
+// FormerlySerializedAs: both old fields were strings/floats like these, so no type
+// conversion is needed. Unity only applies the rename to data that belongs to THIS
+// script asset (same .meta GUID). To carry values over from objects that used the
+// namespaced component, keep that file's .meta, put this class in that file, and
+// delete this one; otherwise re-tag those objects by hand.
 public class SurfaceType : MonoBehaviour
 {
     [Tooltip("Must match a label on the FMOD Surface parameter, e.g. Wood, Stone, Carpet, Rubble.")]
+    [FormerlySerializedAs("SurfaceName")]
     [SerializeField] private string surfaceLabel = "Stone";
 
     [Tooltip("How reflective this surface is, 0 = dead, 1 = hard and bright. " +
              "Read by AcousticProbe2D to estimate room brightness.")]
     [Range(0f, 1f)]
+    [FormerlySerializedAs("Reflectivity")]
     [SerializeField] private float reflectivity = 0.5f;
 
     public string SurfaceLabel => surfaceLabel;

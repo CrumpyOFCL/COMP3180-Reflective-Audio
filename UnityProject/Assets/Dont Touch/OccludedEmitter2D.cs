@@ -24,6 +24,10 @@ namespace ReflectiveAudio2D
         [SerializeField] private LayerMask occluderLayers;
         [SerializeField] private string occlusionParameter = "Occlusion";
 
+        [Tooltip("Start the event in Start (old behaviour). Turn off when another " +
+                 "script (e.g. steamGenerator) calls Play()/Stop().")]
+        [SerializeField] private bool playOnStart = true;
+
         [Header("Method")]
         [SerializeField] private bool measureThickness = true;
         [Tooltip("Units of solid material for full occlusion, when measuring thickness.")]
@@ -55,10 +59,34 @@ namespace ReflectiveAudio2D
                 useTriggers = false
             };
 
-            if (eventRef.IsNull) return;
+            if (playOnStart) Play();
+        }
+
+        // ADDED (round 2): scripted start/stop for emitters owned by gameplay
+        // scripts. Play restarts the event from its timeline start (so a start
+        // burst authored there plays each time).
+        public bool IsPlaying => instance.isValid();
+
+        public void Play()
+        {
+            if (eventRef.IsNull || instance.isValid()) return;
             instance = RuntimeManager.CreateInstance(eventRef);
             RuntimeManager.AttachInstanceToGameObject(instance, transform);
+            if (listener != null) instance.setParameterByName(occlusionParameter, CalculateOcclusion());
             instance.start();
+            timer = checkInterval;   // measure occlusion on the next Update
+        }
+
+        public void Stop(bool allowFadeout = true)
+        {
+            if (!instance.isValid()) return;
+            if (RuntimeManager.IsInitialized)
+            {
+                instance.stop(allowFadeout ? FMOD.Studio.STOP_MODE.ALLOWFADEOUT
+                                           : FMOD.Studio.STOP_MODE.IMMEDIATE);
+                instance.release();
+            }
+            instance.clearHandle();
         }
 
         // CHANGED: the listener was only looked up once in Start. If the
@@ -119,12 +147,10 @@ namespace ReflectiveAudio2D
 
         private void OnDestroy()
         {
-            if (!instance.isValid()) return;
-            // CHANGED: fully qualified. With both "using FMOD.Studio" and
-            // "using FMODUnity" in scope, bare STOP_MODE is ambiguous (FMODUnity
+            // CHANGED: fully qualified (inside Stop). With both "using FMOD.Studio"
+            // and "using FMODUnity" in scope, bare STOP_MODE is ambiguous (FMODUnity
             // defines its own STOP_MODE enum) - compile error CS0104.
-            instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            instance.release();
+            Stop(true);
         }
 
         private void OnDrawGizmosSelected()
