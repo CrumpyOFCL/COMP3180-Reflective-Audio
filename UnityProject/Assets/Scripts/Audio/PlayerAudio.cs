@@ -50,6 +50,13 @@ public class PlayerAudio : MonoBehaviour
     private float distanceSinceStep;
     private float lastStepX;
 
+    private Rigidbody2D body;
+
+    private void Awake()
+    {
+        body = GetComponent<Rigidbody2D>();
+    }
+
 
     #region - Footsteps -
 
@@ -129,6 +136,7 @@ public class PlayerAudio : MonoBehaviour
         instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
         instance.setParameterByNameWithLabel("Surface", DetectSurface());
         instance.setParameterByName("FallSpeed", weight);
+        RuntimeManager.AttachInstanceToGameObject(instance, gameObject, body);
         instance.start();
         instance.release();
     }
@@ -157,6 +165,7 @@ public class PlayerAudio : MonoBehaviour
         instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
         instance.setParameterByNameWithLabel("Era", era.ToString());
         instance.setParameterByNameWithLabel("Direction", direction >= 0 ? "Forward" : "Backward");
+        RuntimeManager.AttachInstanceToGameObject(instance, gameObject, body);
         instance.start();
         instance.release();
     }
@@ -194,6 +203,7 @@ public class PlayerAudio : MonoBehaviour
         EventInstance instance = RuntimeManager.CreateInstance(reference);
         instance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
         instance.setParameterByNameWithLabel(parameter, label);
+        RuntimeManager.AttachInstanceToGameObject(instance, gameObject, body);
         instance.start();
 
         // Released instances are cleaned up by FMOD once the one-shot finishes.
