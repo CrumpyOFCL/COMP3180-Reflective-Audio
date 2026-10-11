@@ -36,6 +36,16 @@ public class PlayerAudio : MonoBehaviour
     [Tooltip("Fall speed that maps to FallSpeed = 1. Anything faster is clamped.")]
     [SerializeField] private float maxLandingSpeed = 20f;
 
+    [Header("Ladder")]
+    [Tooltip("One-shot when the player gets onto a ladder.")]
+    [SerializeField] private EventReference climbGrabEvent;
+
+    [Tooltip("One-shot per rung while climbing, up or down.")]
+    [SerializeField] private EventReference climbStepEvent;
+
+    [Tooltip("Vertical distance climbed between step sounds. Tune against the climb animation's hand grabs.")]
+    [SerializeField] private float climbStepDistance = 0.5f;
+
     [Header("Combat")]
     [SerializeField] private EventReference shootEvent;
 
@@ -49,6 +59,10 @@ public class PlayerAudio : MonoBehaviour
     private bool isWalking;
     private float distanceSinceStep;
     private float lastStepX;
+
+    private bool isClimbing;
+    private float distanceSinceClimbStep;
+    private float lastClimbY;
 
     private Rigidbody2D body;
 
@@ -93,6 +107,49 @@ public class PlayerAudio : MonoBehaviour
     {
         isWalking = false;
         distanceSinceStep = 0f;
+    }
+
+
+    // Getting onto a ladder. The first rung step then waits a full rung, so
+    // grabbing with Up held doesn't play a step on top of the grab.
+    public void PlayClimbGrab()
+    {
+        Play(climbGrabEvent);
+
+        isClimbing = true;
+        lastClimbY = transform.position.y;
+        distanceSinceClimbStep = 0f;
+    }
+
+
+    // Ladder equivalent of UpdateWalking: distance climbed rather than walked,
+    // so it keeps pace with the climb and goes quiet while hanging still.
+    public void UpdateClimbing(bool climbing, bool moving)
+    {
+        if (!climbing || !moving)
+        {
+            isClimbing = false;
+            distanceSinceClimbStep = 0f;
+            return;
+        }
+
+        if (!isClimbing)
+        {
+            isClimbing = true;
+            lastClimbY = transform.position.y;
+
+            // Setting off again after hanging still steps straight away, like
+            // the first footstep.
+            distanceSinceClimbStep = climbStepDistance;
+        }
+
+        distanceSinceClimbStep += Mathf.Abs(transform.position.y - lastClimbY);
+        lastClimbY = transform.position.y;
+
+        if (distanceSinceClimbStep < climbStepDistance) return;
+
+        distanceSinceClimbStep = 0f;
+        Play(climbStepEvent);
     }
 
 
