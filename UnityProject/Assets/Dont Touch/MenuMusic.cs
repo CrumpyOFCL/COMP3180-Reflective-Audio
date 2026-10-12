@@ -362,7 +362,7 @@ public class MenuMusic : MonoBehaviour
         {
             try
             {
-                reference = EventReference.Find(def.Path);
+                reference = RuntimeManager.PathToEventReference(def.Path);
             }
             catch (Exception ex)
             {
