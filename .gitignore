@@ -1,0 +1,71 @@
+# ===================================================================
+# Unity project (UnityProject/)
+# ===================================================================
+/UnityProject/[Ll]ibrary/
+/UnityProject/[Tt]emp/
+/UnityProject/[Oo]bj/
+/UnityProject/[Bb]uild/
+/UnityProject/[Bb]uilds/
+/UnityProject/[Ll]ogs/
+/UnityProject/[Uu]ser[Ss]ettings/
+/UnityProject/[Mm]emoryCaptures/
+/UnityProject/[Rr]ecordings/
+
+# Never ignore .meta files for assets that are committed
+!/UnityProject/[Aa]ssets/**/*.meta
+
+# IDE and generated project files
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.tmp
+sysinfo.txt
+crashlytics-build.properties
+
+# Build outputs
+*.apk
+*.aab
+*.app
+*.exe
+
+# FMOD for Unity: regenerated editor cache and logs
+/UnityProject/[Aa]ssets/Plugins/FMOD/Cache/
+fmod*.log
+
+# ===================================================================
+# FMOD Studio project (FMODProject/)
+# FMOD's guidance: never commit the .cache and .user folders.
+# Source audio is kept out of this repo (storage limits); the built
+# banks live in UnityProject/Assets/FMOD/Desktop instead.
+# ===================================================================
+/FMODProject/.cache/
+/FMODProject/.user/
+/FMODProject/Build/
+/FMODProject/Assets/**/*.wav
+/FMODProject/Assets/**/*.flac
+/UnityProject/[Aa]ssets/[Ss]treaming[Aa]ssets/FMODBanks/
+
+# ===================================================================
+# Large media: the portfolio video lives on Echo360, not here
+# ===================================================================
+*.mp4
+*.mov
+*.mkv
+*.avi
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
