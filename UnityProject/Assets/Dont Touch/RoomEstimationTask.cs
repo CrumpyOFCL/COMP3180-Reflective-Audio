@@ -53,7 +53,8 @@ namespace ReflectiveAudio2D
                  "old behaviour (probeEmitter must then carry a StudioEventEmitter " +
                  "whose Play Event is Object Enable).")]
         [SerializeField] private EventReference probeEvent;
-        [SerializeField] private KeyCode probeKey = KeyCode.Space;
+        [Tooltip("CHANGED (test scene): default was Space, which is also the jump key.")]
+        [SerializeField] private KeyCode probeKey = KeyCode.P;
 
         [Header("Vision blocking")]
         [Tooltip("A full-screen black overlay. The participant must judge by ear only.")]
@@ -66,6 +67,11 @@ namespace ReflectiveAudio2D
         [Header("Session")]
         [SerializeField] private string participantId = "P00";
         [SerializeField] private KeyCode startKey = KeyCode.F12;
+        [Tooltip("ADDED (test scene): switched off while the task runs and back on at " +
+                 "the end. Put Player and PlayerAimAndShoot here, so clicking Submit " +
+                 "doesn't fire the beam, the probe key doesn't jump, and the mouse " +
+                 "cursor stays visible for the slider.")]
+        [SerializeField] private Behaviour[] disableWhileRunning;
 
         private int index = -1;
         private int[] order;
@@ -93,8 +99,8 @@ namespace ReflectiveAudio2D
 
         private void Update()
         {
-            if (!running && Input.GetKeyDown(startKey)) BeginRun();
-            if (running && Input.GetKeyDown(probeKey))
+            if (!running && KeyInput.Down(startKey)) BeginRun();
+            if (running && KeyInput.Down(probeKey))
             {
                 if (!probeEvent.IsNull) PlayProbeEvent();
                 else if (probeEmitter != null) StartCoroutine(PulseProbe());
@@ -115,6 +121,7 @@ namespace ReflectiveAudio2D
 
             index = -1;
             running = true;
+            SetFrozen(true);
             SetBlindfold(true);
             NextSpace();
         }
@@ -165,6 +172,7 @@ namespace ReflectiveAudio2D
         private void EndRun()
         {
             running = false;
+            SetFrozen(false);
             SetBlindfold(false);
             Flush();
             Debug.Log("[RoomEstimationTask] Run complete.");
@@ -187,6 +195,21 @@ namespace ReflectiveAudio2D
         private void SetBlindfold(bool on)
         {
             if (blindfoldOverlay != null) blindfoldOverlay.SetActive(on);
+        }
+
+        private void SetFrozen(bool frozen)
+        {
+            if (disableWhileRunning != null)
+                foreach (Behaviour b in disableWhileRunning)
+                    if (b != null) b.enabled = !frozen;
+
+            // The aim script hides the cursor every frame; with it switched off the
+            // participant needs the cursor back to use the slider and buttons.
+            if (frozen)
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
 
         private static void Shuffle(int[] a)
