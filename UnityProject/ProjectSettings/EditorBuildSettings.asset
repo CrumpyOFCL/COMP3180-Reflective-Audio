@@ -5,76 +5,76 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/MainMenu.unity
     guid: c1ee74588608dd34fabd8ca3a524be7d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Core.unity
     guid: 252a18f519c971444b2657ca5aaa7a48
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Cutscenes/IntroCutscene.unity
     guid: 106653df42a9aff4d9cf5b73a6997d87
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Cutscenes/EndCutscene.unity
     guid: ac71549d04ad0794a88a813683f6f690
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Foyer.unity
     guid: 8f210a569a76e404d9d85159d7bf06e6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Library/Library_Grimoire.unity
     guid: db9b055f358e36c44bc4c8d99933a7e1
   - enabled: 0
     path: Assets/Scenes/Old Prototypes/Boiler.unity
     guid: 32b5359f3970c3b45b0bf30886d560aa
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/GreenHouse/GH_Entrance.unity
     guid: 150549a06602e0e4e8a6417253221c61
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/GreenHouse/GH_LowerMain.unity
     guid: 9d46d1e48e4f6864abf25be764974f5a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/GreenHouse/GH_Storage.unity
     guid: 50845c2b211972c45a0922f095cd94a2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/GreenHouse/GH_UpperMain.unity
     guid: 9bd3a21600f294247acbc07016c1bb7c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/GreenHouse/GH_Dome.unity
     guid: 709b966179457b441aa908f976abc80f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/GreenHouse/GH_Exit.unity
     guid: ccfea2f6cb15f1d4ba6198ee8f2e793b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Boiler/Boiler_Enterance.unity
     guid: 70d2536e0a643164d9c36f1418c69c37
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Boiler/Boiler_Trial.unity
     guid: e5e5ab7061a269a4fb6c3645685f0e5a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Library/Library_Counterweight.unity
     guid: 0652257c6220ca94085e1f109fce733b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Library/Library_Main.unity
     guid: 3a6e2a60436a0c8458391db27e50b0f7
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Library/Library_Storage.unity
     guid: 9196eabf58401cc4e959e8d12527ff01
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Library/Library_Maze.unity
     guid: c3ab67827cd5542438112f6bd6cb43b9
   - enabled: 0
     path: Assets/Scenes/Main Build/Library/Library_MazeUpper.unity
     guid: 69074796855b7b74887057a2878355c5
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Cutscenes/PlaytestCutscene.unity
     guid: d0728ad112ca46648b40ec9208e75164
   - enabled: 0
     path: Assets/Scenes/Old Prototypes/Retired_Vertical.unity
     guid: 2860eb395758ef64f8793c995076dc85
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Boiler/Boiler_Heart.unity
     guid: 960214c4a310c8243a153c9b114bd999
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Build/Boiler/Boiler_Steam.unity
     guid: 4f5a18e2fe997bd4aa1f4ece6e5951c4
   m_configObjects:
