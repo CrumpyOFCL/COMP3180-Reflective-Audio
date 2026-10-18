@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7881458532123517134}
   - component: {fileID: 4104212297378365879}
   - component: {fileID: 1826406177988338010}
-  - component: {fileID: -4481056063856721855}
+  - component: {fileID: 7836415576908741103}
   m_Layer: 16
   m_Name: TimeBeam
   m_TagString: Bullets
@@ -157,7 +157,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &-4481056063856721855
+--- !u!114 &7836415576908741103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,28 +166,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5886162991425877698}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4888d06087562546bdd7ff4d0c2f1db, type: 3}
+  m_Script: {fileID: 11500000, guid: 33bafc03df57ec94db023ef1ac0ac43d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BeamBehaviour
-  fallbackSpeed: 50
-  fallbackLifetime: 5
-  crateKnockbackForce: 8
-  reflectionOffset: 0.03
-  maxMirrorBounces: 3
-  reflectionCastPadding: 0.1
-  ignoredLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  beamBlockingLayers:
-    serializedVersion: 2
-    m_Bits: 960
-  reflectEvent:
-    Guid:
-      Data1: -1506808113
-      Data2: 1208493192
-      Data3: 539842224
-      Data4: 309669134
-    Path: event:/SFX/Beam/Reflect
+  m_EditorClassIdentifier: Assembly-CSharp::ShowcaseBeam
+  speed: 50
+  lifetime: 5
   impactEvent:
     Guid:
       Data1: 1714465596
