@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{c6396bf7-000e-461c-91c6-ab00ac3548fd}">
+		<property name="assetPath">
+			<value>SFX/Player/player_timeswitch_fwd_past_02.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>1.4066041666666667</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e6347821-dd43-4f7b-bfb6-2fc3ff3a11b7}</destination>
+		</relationship>
+	</object>
+</objects>

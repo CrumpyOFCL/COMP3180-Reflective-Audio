@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{3e81fa98-2f47-49b4-bc5e-5294ab95033b}">
+		<property name="assetPath">
+			<value>SFX/Box/prop_box_push_loop_01.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>3.1299999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e6347821-dd43-4f7b-bfb6-2fc3ff3a11b7}</destination>
+		</relationship>
+	</object>
+</objects>

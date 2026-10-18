@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{9ecb89ad-8db3-4271-9d50-9d971c55ce13}">
+		<property name="name">
+			<value>Bounce</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{6c57575c-adae-4dd9-ac9c-13f81af70173}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{6c57575c-adae-4dd9-ac9c-13f81af70173}" />
+</objects>

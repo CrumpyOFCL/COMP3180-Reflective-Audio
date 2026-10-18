@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{a4314db3-1bc0-4199-ae85-52073f1b0df1}">
+		<property name="name">
+			<value>FallSpeed</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{f1289cef-d494-4b9a-bddd-70be359e59f0}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{f1289cef-d494-4b9a-bddd-70be359e59f0}" />
+</objects>

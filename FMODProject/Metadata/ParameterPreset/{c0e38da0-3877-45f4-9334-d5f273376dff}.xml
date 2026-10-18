@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{c0e38da0-3877-45f4-9334-d5f273376dff}">
+		<property name="name">
+			<value>Brightness</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{7f024422-79a3-433c-87af-0514d97f81cc}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{7f024422-79a3-433c-87af-0514d97f81cc}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0.5</value>
+		</property>
+	</object>
+</objects>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{cbd93c45-f6c1-4840-ba83-c13376bf6601}">
+		<property name="name">
+			<value>Era</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{58d760cd-f208-4292-87f7-66ab7d81cead}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{58d760cd-f208-4292-87f7-66ab7d81cead}">
+		<property name="maximum">
+			<value>2</value>
+		</property>
+	</object>
+</objects>

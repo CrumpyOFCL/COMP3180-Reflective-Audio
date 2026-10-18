@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{6eb0b5d1-2af6-461d-b589-c097fe639e4e}">
+		<property name="name">
+			<value>Enclosure</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{015517ca-d333-4cdd-aa87-e968782d293e}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{015517ca-d333-4cdd-aa87-e968782d293e}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
