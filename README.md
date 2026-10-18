@@ -113,7 +113,6 @@ The delay comes from the wall distance: `delay (ms) = 2 × distance (m) / 343 ×
 This repo was split out of my team's game project (Group Flux, COMP3150) so that only my audio work is shown.
 
 - **Commit history** is kept only for my audio files (the acoustic scripts, the audio layer, the audio UI and the FMOD settings), extracted from the team repository with `git filter-repo`, and for the FMOD Studio project.
-- **FMOD project replaced.** `FMODProject/` was first imported from an older FMOD project (ACIT_Audio) by mistake. On 18 Oct 2026 it was replaced with ShowcaseAudio, the FMOD project this showcase uses. The older commits are still in the history.
 - **Supporting files** that Unity needs to run the showcase (project settings, packages, the player and its sprites, the beam, the Greybox tiles and the built banks) were added as a single snapshot commit, because teammates also worked on them. That commit message says so.
 - Teammates' other code and art, and third-party store assets, are not included.
 
