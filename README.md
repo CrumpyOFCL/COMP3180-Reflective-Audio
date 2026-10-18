@@ -1,6 +1,6 @@
 # Reflective Room Acoustics for 2D Games
 
-**Tyler [SURNAME]** · Student ID [ID] · COMP3180 Final Project · Session 2, 2026
+**Tyler Crump** · Student ID 47730757 · COMP3180 Final Project 
 
 Commercial acoustic simulation tools such as Steam Audio need 3D meshes, so 2D tilemap games are left with hand-placed reverb zones. This project builds a **listener-centred raycast system** in Unity and FMOD. Rays cast from the listener measure the space around the player, and the measurements drive reverb and directional early reflections in real time. The raycast system is then compared against authored reverb zones and against Steam Audio running on generated proxy geometry.
 
