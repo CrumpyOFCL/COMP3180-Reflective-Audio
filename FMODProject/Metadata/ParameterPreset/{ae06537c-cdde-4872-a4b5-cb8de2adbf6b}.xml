@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{ae06537c-cdde-4872-a4b5-cb8de2adbf6b}">
+		<property name="name">
+			<value>ReflectGainUp</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{f9a1bb0a-ab10-4d1b-8295-cac3b60cccd1}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{f9a1bb0a-ab10-4d1b-8295-cac3b60cccd1}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

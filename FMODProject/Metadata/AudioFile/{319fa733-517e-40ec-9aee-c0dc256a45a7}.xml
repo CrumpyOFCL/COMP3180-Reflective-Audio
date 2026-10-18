@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{319fa733-517e-40ec-9aee-c0dc256a45a7}">
+		<property name="assetPath">
+			<value>Amb/OneShots/Past/amb_past_knock_01.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.90000000000000002</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e6347821-dd43-4f7b-bfb6-2fc3ff3a11b7}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{52a6203a-42f3-4d6e-873c-12d51d89c730}">
+		<property name="name">
+			<value>ReflectGainL</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{de49dce2-40d4-44ef-9c85-e1e679f8d53b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{de49dce2-40d4-44ef-9c85-e1e679f8d53b}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

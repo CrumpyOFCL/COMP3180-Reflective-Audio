@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="Snapshot" id="{a343c172-09be-411d-abdd-49950d1d48fb}">
+		<property name="name">
+			<value>Duck_Sting</value>
+		</property>
+		<relationship name="mixer">
+			<destination>{9e1dc256-8a6a-464c-88c6-a03d289821d1}</destination>
+		</relationship>
+		<relationship name="automatableProperties">
+			<destination>{bc93d9b3-9e1a-4dbc-85ae-b626d4b22441}</destination>
+		</relationship>
+		<relationship name="markerTracks">
+			<destination>{85eaae6c-4597-4334-88d8-6e9cfe718890}</destination>
+		</relationship>
+		<relationship name="timeline">
+			<destination>{eca9aae8-fbad-4628-a9f2-c77116bccb25}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{d6ea0d63-910f-4269-aea7-b471be4ee81f}</destination>
+		</relationship>
+		<relationship name="snapshotMasterTrack">
+			<destination>{26343911-13e1-4ce4-a6ce-384a4dabe61b}</destination>
+		</relationship>
+	</object>
+	<object class="EventAutomatableProperties" id="{bc93d9b3-9e1a-4dbc-85ae-b626d4b22441}" />
+	<object class="MarkerTrack" id="{85eaae6c-4597-4334-88d8-6e9cfe718890}" />
+	<object class="Timeline" id="{eca9aae8-fbad-4628-a9f2-c77116bccb25}" />
+	<object class="SnapshotMasterTrack" id="{26343911-13e1-4ce4-a6ce-384a4dabe61b}" />
+</objects>

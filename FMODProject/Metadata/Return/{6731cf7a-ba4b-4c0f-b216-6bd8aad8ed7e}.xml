@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerReturn" id="{6731cf7a-ba4b-4c0f-b216-6bd8aad8ed7e}">
+		<property name="name">
+			<value>Steam Audio Reverb</value>
+		</property>
+		<relationship name="masters">
+			<destination>{cd00bf07-e3ac-4011-a1ea-8857947590f3}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{2c1bf3e3-eab8-49f6-8fe4-fe8ad072cb63}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{cafb64ed-4715-4845-bb42-25a858d7bbaa}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{d36ad449-6c82-42a1-8090-4730a154cf3b}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{2c1bf3e3-eab8-49f6-8fe4-fe8ad072cb63}">
+		<relationship name="effects">
+			<destination>{48eef601-818c-4cd6-993f-818d380a80e4}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{cafb64ed-4715-4845-bb42-25a858d7bbaa}" />
+	<object class="MixerBusFader" id="{48eef601-818c-4cd6-993f-818d380a80e4}" />
+</objects>

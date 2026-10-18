@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="Snapshot" id="{40bbc23c-6445-4915-b6ad-631208e4a151}">
+		<property name="name">
+			<value>Zone_SmallRoom</value>
+		</property>
+		<relationship name="mixer">
+			<destination>{9e1dc256-8a6a-464c-88c6-a03d289821d1}</destination>
+		</relationship>
+		<relationship name="automatableProperties">
+			<destination>{d8625823-faa8-4f97-a7fa-b41d2903f1a4}</destination>
+		</relationship>
+		<relationship name="markerTracks">
+			<destination>{4fcdd315-7494-4e87-8e98-5e0e194596cb}</destination>
+		</relationship>
+		<relationship name="timeline">
+			<destination>{9ada56e6-e3ae-40a1-91f7-846001502b39}</destination>
+		</relationship>
+		<relationship name="banks">
+			<destination>{d6ea0d63-910f-4269-aea7-b471be4ee81f}</destination>
+		</relationship>
+		<relationship name="snapshotMasterTrack">
+			<destination>{6b70c78b-9546-40c6-bae7-d2ab42780b5a}</destination>
+		</relationship>
+	</object>
+	<object class="EventAutomatableProperties" id="{d8625823-faa8-4f97-a7fa-b41d2903f1a4}" />
+	<object class="MarkerTrack" id="{4fcdd315-7494-4e87-8e98-5e0e194596cb}" />
+	<object class="Timeline" id="{9ada56e6-e3ae-40a1-91f7-846001502b39}" />
+	<object class="SnapshotMasterTrack" id="{6b70c78b-9546-40c6-bae7-d2ab42780b5a}" />
+</objects>
