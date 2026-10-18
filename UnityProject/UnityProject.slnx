@@ -1,3 +1,6 @@
 ﻿<Solution>
+  <Project Path="SteamAudioUnity.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="SteamAudioUnityEditor.csproj" />
+  <Project Path="SteamAudioFMODStudio.csproj" />
 </Solution>

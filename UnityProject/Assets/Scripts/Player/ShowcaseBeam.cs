@@ -7,6 +7,8 @@ using UnityEngine;
 // It flies straight, stops on the first thing it hits, and plays the same
 // FMOD events as the game: Impact where it stops, Fizzle if it runs out of
 // lifetime. The shot sound itself is PlayerAudio's Shoot event, as in the game.
+// In Condition B the impact also triggers ImageSourceEchoes2D, so the other
+// walls of the room answer it.
 [RequireComponent(typeof(Rigidbody2D))]
 public class ShowcaseBeam : MonoBehaviour
 {
@@ -65,7 +67,13 @@ public class ShowcaseBeam : MonoBehaviour
         rigidBody.linearVelocity = Vector2.zero;
 
         if (GameAudio.IsAlive)
+        {
             GameAudio.PlayOneShot(hitSomething ? impactEvent : fizzleEvent, transform.position);
+
+            // Condition B: the impact's reflections off the room's other walls.
+            if (hitSomething)
+                ReflectiveAudio2D.ImageSourceEchoes2D.Emit(impactEvent, transform.position);
+        }
 
         Destroy(gameObject);
     }

@@ -584,8 +584,8 @@ MonoBehaviour:
       Value: []
       HasValue: 0
     CallbackHandler:
-      Value: {fileID: 0}
-      HasValue: 0
+      Value: {fileID: 11400000, guid: ae74814dfb38e3b4d9a82f7d4c3c067a, type: 2}
+      HasValue: 1
   OutputTypeName: 
   threadAffinities:
     Value: []

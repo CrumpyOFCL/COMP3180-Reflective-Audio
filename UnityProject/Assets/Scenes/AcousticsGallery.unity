@@ -462,6 +462,79 @@ Transform:
   - {fileID: 1384643819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &517896092
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 517896096}
+  - component: {fileID: 517896095}
+  - component: {fileID: 517896094}
+  - component: {fileID: 517896093}
+  m_Layer: 0
+  m_Name: AcousticProprty
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &517896093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517896092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioGeometry
+  material: {fileID: 11400000, guid: 2a011bab5de11df4c81c68931509f73a, type: 2}
+  exportAllChildren: 0
+  terrainSimplificationLevel: 0
+--- !u!114 &517896094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517896092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc105e0301066e24eb4efbce253ecc2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReflectiveAudio2D.TilemapAcousticProxy
+  sourceCollider: {fileID: 1065279992}
+  halfDepth: 4
+  buildCaps: 1
+  capPadding: 2
+--- !u!33 &517896095
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517896092}
+  m_Mesh: {fileID: 4300000, guid: 667883931981ad04692ddd802a94abeb, type: 2}
+--- !u!4 &517896096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517896092}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &550961437
 GameObject:
   m_ObjectHideFlags: 0
@@ -577,6 +650,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 344958749812122111, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
+      propertyPath: m_Mass
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 344958749812122111, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 344958749812122111, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 344958749812122111, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
+      propertyPath: m_GravityScale
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1097565855761105291, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
       propertyPath: m_Name
       value: Player_New
@@ -654,6 +743,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6755889040232695360, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1136506740}
+    - targetCorrespondingSourceObject: {fileID: 6755889040232695360, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1136506743}
+    - targetCorrespondingSourceObject: {fileID: 6755889040232695360, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1136506745}
     - targetCorrespondingSourceObject: {fileID: 4762164982948689300, guid: d30f62c6f0fbff3439a68c7cd9b8b0f6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1882510149}
@@ -840,6 +935,52 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &969732737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 969732739}
+  - component: {fileID: 969732738}
+  m_Layer: 0
+  m_Name: Steam Audio Static Mesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &969732738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969732737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8173b2a8dbe2d2d48995bb2ba9a49ff1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioStaticMesh
+  asset: {fileID: 11400000, guid: debbabaa466a6bd40be7f2ae7e4bf48c, type: 2}
+  sceneNameWhenExported: AcousticsGallery
+--- !u!4 &969732739
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969732737}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1046682341
 GameObject:
   m_ObjectHideFlags: 0
@@ -5558,7 +5699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d18a8762265ee4c82d2d3ebd335574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ReflectiveAudio2D.AcousticProbe2D
-  rayCount: 64
+  rayCount: 32
   maxRayDistance: 25
   surfaceLayers:
     serializedVersion: 2
@@ -5587,6 +5728,64 @@ MonoBehaviour:
   cameraTransform: {fileID: 1670309386}
   cameraBias: 0
   followSpeed: 0
+--- !u!114 &1136506743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136506737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fd9ebf1401392e4bbd47fea32f47642, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: SteamAudioUnity::SteamAudio.SteamAudioListener
+  currentBakedListener: {fileID: 0}
+  applyReverb: 1
+  reverbType: 0
+  useAllProbeBatches: 0
+  probeBatches: []
+  mTotalDataSize: 0
+  mProbeDataSizes: 
+  mIdentifier:
+    type: 0
+    variation: 0
+    endpointInfluence:
+      center:
+        x: 0
+        y: 0
+        z: 0
+      radius: 0
+  mProbeBatchesUsed: []
+--- !u!114 &1136506745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136506737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff7d1b109980e934aa2e69c2cddb69ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReflectiveAudio2D.ImageSourceEchoes2D
+  listener: {fileID: 0}
+  wallLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  maxRayDistance: 40
+  unitsPerMetre: 1
+  speedOfSound: 343
+  reflectivity: 0.7
+  minDelayMs: 10
+  maxDelayMs: 250
+  minGain: 0.05
+  requireSolidAtBounce: 1
+  bounceTolerance: 0.3
+  activeInCondition: 1
+  alwaysActive: 0
+  drawPaths: 1
+  logEchoes: 1
 --- !u!1 &1177371341
 GameObject:
   m_ObjectHideFlags: 0
@@ -6549,3 +6748,5 @@ SceneRoots:
   - {fileID: 1736113468}
   - {fileID: 806414650}
   - {fileID: 1177371343}
+  - {fileID: 517896096}
+  - {fileID: 969732739}
