@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Checkpoint
+  - Mirror
+  - Freezable
+  - Crosshair
+  - Box
+  - Platform
+  - TriggerPressurePlate
+  - SpikeHazard
+  - StartFrozen
+  - SafeLanding
+  - Objective
+  - Bullets
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Past
+  - Present
+  - Solid
+  - Player
+  - Mirror
+  - Crosshair
+  - PlayerHolder
+  - PhasePlatforms
+  - Ladder
+  - Ghost
+  - Bullets
+  - Triggers
+  - Objects
+  - Future
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - BeamBlocker
+  - PuzzleObjects
+  - 
+  - Steam
+  - Map
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  m_RenderingLayers:
+  - Default
