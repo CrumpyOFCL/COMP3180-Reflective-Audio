@@ -51,13 +51,13 @@ namespace ReflectiveAudio2D
 
         private void Update()
         {
-            if (Input.GetKeyDown(toggleKey))
+            if (KeyInput.Down(toggleKey))
             {
                 logging = !logging;
                 Debug.Log($"[AudioBenchmarkLogger] Logging {(logging ? "ON" : "OFF")}");
             }
 
-            if (Input.GetKeyDown(markerKey))
+            if (KeyInput.Down(markerKey))
             {
                 pendingMarker = "MARK";
                 Debug.Log("[AudioBenchmarkLogger] Marker placed");
