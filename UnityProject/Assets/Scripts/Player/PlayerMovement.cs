@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public bool isDashing;
     [HideInInspector] public PlayerDash dashComponent;
-    [HideInInspector] public PlayerClimb climbComponent;
 
     [Header("Movement Values")]
     [SerializeField] private float movementSpeed;
@@ -82,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        if (climbComponent == null) climbComponent = GetComponent<PlayerClimb>();
     }
 
     private void Update()
@@ -205,8 +203,6 @@ public class PlayerMovement : MonoBehaviour
 
         // A ladder holds the player up by zeroing gravity. This runs every
         // frame, so without this it would put gravity straight back.
-        if (climbComponent != null && climbComponent.isClimbing)
-            return;
 
         if (rb.linearVelocity.y > 0)
         {
