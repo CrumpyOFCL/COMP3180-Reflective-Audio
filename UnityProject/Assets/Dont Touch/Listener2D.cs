@@ -27,6 +27,11 @@ namespace ReflectiveAudio2D
         [Tooltip("Smooths listener movement. 0 disables smoothing.")]
         [SerializeField] private float followSpeed = 0f;
 
+        [Tooltip("ADDED (test scene): where the ears are relative to the player's pivot. " +
+                 "The pivot is at the feet, so without this the listener sits on the floor " +
+                 "and the probe, reflection and echo rays graze along it.")]
+        [SerializeField] private Vector2 earOffset = new Vector2(0f, 1.5f);
+
         public Transform Player => player;
 
         private void Reset()
@@ -59,9 +64,9 @@ namespace ReflectiveAudio2D
         {
             if (player == null && cameraTransform == null) return transform.position;
             if (player == null) return Flatten(cameraTransform.position);
-            if (cameraTransform == null) return Flatten(player.position);
+            if (cameraTransform == null) return Flatten(player.position + (Vector3)earOffset);
 
-            Vector3 p = player.position;
+            Vector3 p = player.position + (Vector3)earOffset;
             Vector3 c = cameraTransform.position;
             return new Vector3(Mathf.Lerp(p.x, c.x, cameraBias),
                                Mathf.Lerp(p.y, c.y, cameraBias),

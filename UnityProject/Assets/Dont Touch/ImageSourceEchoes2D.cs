@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using FMODUnity;
 using UnityEngine;
 
@@ -68,6 +69,7 @@ namespace ReflectiveAudio2D
         [Header("Debug")]
         [Tooltip("Draws each reflection path in the Scene view for a second.")]
         [SerializeField] private bool drawPaths = true;
+        [Tooltip("One Console line per impact: each wall's echo, or why it was skipped.")]
         [SerializeField] private bool logEchoes;
 
         private static readonly Vector2[] Axes = { Vector2.left, Vector2.right, Vector2.up, Vector2.down };
@@ -102,11 +104,19 @@ namespace ReflectiveAudio2D
 
         private void EmitEchoes(EventReference sound, Vector2 source)
         {
-            if (sound.IsNull || !ConditionAllows || listener == null) return;
+            if (sound.IsNull || listener == null) return;
+            if (!ConditionAllows)
+            {
+                if (logEchoes)
+                    Debug.Log($"[ImageSourceEchoes2D] Impact ignored: condition is {ConditionManager.Current}, echoes run in {activeInCondition}.");
+                return;
+            }
 
             Vector2 ear = listener.position;
             float direct = Vector2.Distance(source, ear);
             if (direct < 0.01f) return;
+
+            var report = logEchoes ? new List<string>(4) : null;
 
             // The source usually sits on (or just inside) the wall it hit. Rays are
             // cast from a point nudged towards the listener so they start in the room.
@@ -114,18 +124,25 @@ namespace ReflectiveAudio2D
 
             foreach (Vector2 axis in Axes)
             {
-                if (!TryFindWall(sourceProbe, ear, axis, out float plane)) continue;
+                string wall = AxisName(axis);
+
+                if (!TryFindWall(sourceProbe, ear, axis, out float plane)) { report?.Add($"{wall}: no wall"); continue; }
 
                 Vector2 image = Mirror(source, axis, plane);
                 float reflected = Vector2.Distance(image, ear);
                 float delayMs = (reflected - direct) / unitsPerMetre / speedOfSound * 1000f;
-                if (delayMs < minDelayMs || delayMs > maxDelayMs) continue;
+                if (delayMs < minDelayMs) { report?.Add($"{wall}: {delayMs:F0} ms, too short"); continue; }
+                if (delayMs > maxDelayMs) { report?.Add($"{wall}: {delayMs:F0} ms, too long"); continue; }
 
-                if (!TryBouncePoint(ear, image, axis, plane, out Vector2 bounce)) continue;
-                if (requireSolidAtBounce && !(PathReaches(ear, bounce) && PathReaches(sourceProbe, bounce))) continue;
+                if (!TryBouncePoint(ear, image, axis, plane, out Vector2 bounce)) { report?.Add($"{wall}: no bounce point"); continue; }
+                if (requireSolidAtBounce && !(PathReaches(ear, bounce) && PathReaches(sourceProbe, bounce)))
+                {
+                    report?.Add($"{wall}: bounce at ({bounce.x:F1}, {bounce.y:F1}) is in an opening");
+                    continue;
+                }
 
                 float gain = reflectivity * direct / reflected;
-                if (gain < minGain) continue;
+                if (gain < minGain) { report?.Add($"{wall}: too quiet ({gain:F2})"); continue; }
 
                 // Arrives from the bounce direction, at the direct sound's distance.
                 Vector2 position = ear + (bounce - ear).normalized * direct;
@@ -136,9 +153,12 @@ namespace ReflectiveAudio2D
                     Debug.DrawLine(source, bounce, Color.yellow, 1f);
                     Debug.DrawLine(bounce, ear, Color.yellow, 1f);
                 }
-                if (logEchoes)
-                    Debug.Log($"[ImageSourceEchoes2D] {AxisName(axis)} wall: +{delayMs:F0} ms, gain {gain:F2} ({20f * Mathf.Log10(gain):F1} dB)");
+                report?.Add($"{wall}: ECHO +{delayMs:F0} ms, {20f * Mathf.Log10(gain):F1} dB");
             }
+
+            if (report != null)
+                Debug.Log($"[ImageSourceEchoes2D] Impact at ({source.x:F1}, {source.y:F1}), ear at ({ear.x:F1}, {ear.y:F1}): " +
+                          string.Join(" | ", report));
         }
 
         // The wall bounding the room in this direction: the nearer of the walls hit
