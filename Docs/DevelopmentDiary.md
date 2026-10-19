@@ -1,6 +1,6 @@
 # Development Diary: Reflective Room Acoustics for 2D Games
 
-**Tyler [SURNAME]** · COMP3180 · Session 2, 2026
+**Tyler Crump** · COMP3180 · Session 2, 2026
 Unity 6.3 LTS (6000.3.10f1) · FMOD Studio / FMOD for Unity 2.03
 
 > **How to read this diary.** One entry per teaching week, matching the headings of the Final Project Report. Each entry records what changed, the **roadblocks** hit, the **breakthroughs** that got past them, any **plan changes** against the research proposal, and where **AI assistance** was used (cross-referenced in the report's Statement on Generative AI use). Screenshots are in [`DiaryImages/`](DiaryImages/).

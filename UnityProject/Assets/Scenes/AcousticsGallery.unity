@@ -1563,7 +1563,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 0
-      m_TileSpriteIndex: 2
+      m_TileSpriteIndex: 15
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -5488,7 +5488,7 @@ Tilemap:
     m_Data: {fileID: -209274926, guid: ea4dea888973d844db9e470d6afb4301, type: 3}
   - m_RefCount: 3
     m_Data: {fileID: -35923430, guid: ea4dea888973d844db9e470d6afb4301, type: 3}
-  - m_RefCount: 160
+  - m_RefCount: 159
     m_Data: {fileID: 549963449, guid: ea4dea888973d844db9e470d6afb4301, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: -1431261615, guid: ea4dea888973d844db9e470d6afb4301, type: 3}
@@ -5508,6 +5508,14 @@ Tilemap:
     m_Data: {fileID: 504605741, guid: ea4dea888973d844db9e470d6afb4301, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -79719144, guid: ea4dea888973d844db9e470d6afb4301, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: -966365891, guid: ea4dea888973d844db9e470d6afb4301, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 408
     m_Data:
@@ -5728,6 +5736,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 1670309386}
   cameraBias: 0
   followSpeed: 0
+  earOffset: {x: 0, y: 1.5}
 --- !u!114 &1136506743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5776,11 +5785,11 @@ MonoBehaviour:
   maxRayDistance: 40
   unitsPerMetre: 1
   speedOfSound: 343
-  reflectivity: 0.7
+  reflectivity: 1
   minDelayMs: 10
   maxDelayMs: 250
   minGain: 0.05
-  requireSolidAtBounce: 1
+  requireSolidAtBounce: 0
   bounceTolerance: 0.3
   activeInCondition: 1
   alwaysActive: 0
