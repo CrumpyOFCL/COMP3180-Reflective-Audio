@@ -16,11 +16,11 @@ Commercial acoustic simulation tools such as Steam Audio need 3D meshes, so 2D t
 |---|---|---|
 | 1 | **Unity project**: all three acoustic conditions plus the test scene | [`UnityProject/`](UnityProject/) |
 | 2 | **FMOD Studio project**: buses, returns, global parameters, automation (source audio excluded, see below) | [`FMODProject/`](FMODProject/) |
-| 3 | **Portfolio video** (Echo360) | [ECHO360 LINK] |
+| 3 | **Portfolio video** | [`Link`](https://echo360.net.au/media/0d4af3e3-887a-454f-94cd-07fa26657b4b/public) |
 | 4 | **Development diary**: weekly progress, roadblocks, breakthroughs | [`Docs/DevelopmentDiary.md`](Docs/DevelopmentDiary.md) |
 | 5 | **Evaluation materials and raw data**: protocol, instruments, results | [`Docs/Evaluation/`](Docs/Evaluation/) |
 | 6 | **Implementation guide** for 2D audio designers | [`Docs/Guide/`](Docs/Guide/) |
-| 7 | **Reusable package**: `ReflectiveAudio2D.unitypackage` (scripts and a self-building demo scene) and a template FMOD project | [Release: ReflectiveAudioDemo](https://github.com/CrumpyOFCL/COMP3180-Reflective-Audio/releases/tag/ReflectiveAudioDemo) |
+| 7 | **Reusable package**: `ReflectiveAudio2D.unitypackage` (scripts and a self-building demo scene) and a template FMOD project | [Release: ReflectiveAudioDemo V1.2](https://github.com/CrumpyOFCL/COMP3180-Reflective-Audio/releases/tag/ReflectiveAudioDemo) |
 | 8 | **Final Project Report** | Submitted on iLearn |
 
 The portfolio video and other large media are deliberately **not** stored in this repo, because of the unit's storage limits.
