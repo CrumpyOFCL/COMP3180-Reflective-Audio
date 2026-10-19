@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{5e1a9f8b-6fb8-4038-ace6-db69a0d1577d}">
+		<property name="name">
+			<value>Solved</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{454314b2-55ee-4639-b1cc-473b66e59cc1}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{454314b2-55ee-4639-b1cc-473b66e59cc1}" />
+</objects>

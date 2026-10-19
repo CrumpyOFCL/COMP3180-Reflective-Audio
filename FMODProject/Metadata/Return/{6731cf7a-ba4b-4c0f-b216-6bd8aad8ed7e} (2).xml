@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerReturn" id="{6731cf7a-ba4b-4c0f-b216-6bd8aad8ed7e}">
+		<property name="name">
+			<value>Steam Audio Reverb</value>
+		</property>
+		<relationship name="masters">
+			<destination>{cd00bf07-e3ac-4011-a1ea-8857947590f3}</destination>
+		</relationship>
+		<relationship name="effectChain">
+			<destination>{2c1bf3e3-eab8-49f6-8fe4-fe8ad072cb63}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{cafb64ed-4715-4845-bb42-25a858d7bbaa}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{d36ad449-6c82-42a1-8090-4730a154cf3b}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{2c1bf3e3-eab8-49f6-8fe4-fe8ad072cb63}">
+		<relationship name="effects">
+			<destination>{57006451-758d-4d23-9934-f68a1bfea303}</destination>
+			<destination>{48eef601-818c-4cd6-993f-818d380a80e4}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{cafb64ed-4715-4845-bb42-25a858d7bbaa}" />
+	<object class="PluginEffect" id="{57006451-758d-4d23-9934-f68a1bfea303}">
+		<relationship name="plugin">
+			<destination>{4ad40326-1b05-4856-9a7a-69a8b877295b}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusFader" id="{48eef601-818c-4cd6-993f-818d380a80e4}" />
+	<object class="Plugin" id="{4ad40326-1b05-4856-9a7a-69a8b877295b}">
+		<property name="identifier">
+			<value>Steam Audio Reverb</value>
+		</property>
+		<relationship name="pluginParameters">
+			<destination>{4e84df42-e75d-44f0-989b-c31e6fee6ee2}</destination>
+			<destination>{828f07ef-46ad-44e9-a9a0-45ccd87e0cef}</destination>
+		</relationship>
+	</object>
+	<object class="BoolPluginParameter" id="{4e84df42-e75d-44f0-989b-c31e6fee6ee2}">
+		<property name="name">
+			<value>Binaural</value>
+		</property>
+		<property name="value">
+			<value>false</value>
+		</property>
+	</object>
+	<object class="IntPluginParameter" id="{828f07ef-46ad-44e9-a9a0-45ccd87e0cef}">
+		<property name="name">
+			<value>OutputFormat</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+		<property name="minimumValue">
+			<value>0</value>
+		</property>
+		<property name="maximumValue">
+			<value>2</value>
+		</property>
+	</object>
+</objects>

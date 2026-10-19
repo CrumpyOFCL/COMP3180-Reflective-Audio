@@ -1,0 +1,25 @@
+measure,item,condition,median,q1,q3,mean,sd
+size,I could tell how big each room was from its sound.,A,2.0,1.75,2.25,2.0,0.7385489458759964
+size,I could tell how big each room was from its sound.,B,4.5,3.75,5.25,4.333333333333333,1.7232808737106584
+size,I could tell how big each room was from its sound.,C,4.0,3.75,5.25,4.166666666666667,1.9462473604038075
+match,The sound of each room matched how the room looked.,A,2.0,1.0,3.0,2.4166666666666665,1.6764862244009227
+match,The sound of each room matched how the room looked.,B,4.0,2.75,5.0,3.8333333333333335,1.403458930534474
+match,The sound of each room matched how the room looked.,C,4.0,3.0,4.25,3.9166666666666665,1.6213537179739277
+side,I could hear which side nearby walls were on.,A,2.0,1.0,2.0,2.1666666666666665,1.6422453217986943
+side,I could hear which side nearby walls were on.,B,4.0,3.0,5.25,4.166666666666667,1.7494587907710375
+side,I could hear which side nearby walls were on.,C,3.5,2.75,5.0,3.75,1.764549903980152
+smooth,The reverb and echoes changed smoothly as I moved between rooms.,A,1.5,1.0,2.0,1.75,0.9653072991634227
+smooth,The reverb and echoes changed smoothly as I moved between rooms.,B,6.0,5.0,7.0,5.833333333333333,1.0298573010888745
+smooth,The reverb and echoes changed smoothly as I moved between rooms.,C,4.5,3.75,6.25,4.75,1.712255291076124
+presence,The sound made me feel like I was inside the space.,A,1.0,1.0,2.0,1.3333333333333333,0.49236596391733095
+presence,The sound made me feel like I was inside the space.,B,5.0,2.75,5.0,4.083333333333333,1.928651593652148
+presence,The sound made me feel like I was inside the space.,C,4.0,2.75,5.0,3.8333333333333335,1.8504708655481243
+glitch,"I noticed audio glitches, such as sudden jumps, clicks or a metallic ringing.",A,1.0,1.0,1.0,1.0,0.0
+glitch,"I noticed audio glitches, such as sudden jumps, clicks or a metallic ringing.",B,1.0,1.0,1.0,1.3333333333333333,1.1547005383792515
+glitch,"I noticed audio glitches, such as sudden jumps, clicks or a metallic ringing.",C,1.0,1.0,1.0,1.0,0.0
+realism,"Overall, the audio in this version sounded realistic.",A,2.0,1.0,3.25,2.5833333333333335,1.6764862244009227
+realism,"Overall, the audio in this version sounded realistic.",B,5.5,4.75,6.25,5.25,1.6025547785276542
+realism,"Overall, the audio in this version sounded realistic.",C,5.0,4.75,6.0,4.75,1.712255291076124
+composite,Composite (mean of the six spatial items),A,1.8333333333333333,1.75,2.0416666666666665,2.0416666666666665,0.8168830882066171
+composite,Composite (mean of the six spatial items),B,4.666666666666667,4.166666666666667,5.0,4.583333333333333,0.708890155472096
+composite,Composite (mean of the six spatial items),C,4.25,3.8333333333333335,4.583333333333333,4.194444444444444,0.8159809531017962

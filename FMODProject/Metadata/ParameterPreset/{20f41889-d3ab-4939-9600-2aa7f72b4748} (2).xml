@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{20f41889-d3ab-4939-9600-2aa7f72b4748}">
+		<property name="name">
+			<value>ReflectDelayR</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{20964855-c643-4cba-99e1-980c1813726f}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{20964855-c643-4cba-99e1-980c1813726f}">
+		<property name="maximum">
+			<value>250</value>
+		</property>
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

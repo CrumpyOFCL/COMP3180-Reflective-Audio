@@ -88,8 +88,9 @@ namespace ReflectiveAudio2D
         private const int EdgeHeight = 30;
 
 #if UNITY_EDITOR
+        /// <summary>Editor only. Also called by Tools > Reflective Audio 2D > Create Demo Scene.</summary>
         [ContextMenu("Build Rooms")]
-        private void Build()
+        public void Build()
         {
             if (tilemap == null) tilemap = GetComponent<Tilemap>();
             if (tilemap == null || wallTile == null)
@@ -117,6 +118,14 @@ namespace ReflectiveAudio2D
                 DrawRoom(i, starts[i]);
 
             tilemap.CompressBounds();
+
+            // Build the wall collision now. The tilemap collider otherwise catches up at the
+            // end of the frame, so a scene saved straight after building keeps an empty
+            // composite collider and the player falls through the walls.
+            var tilemapCollider = tilemap.GetComponent<TilemapCollider2D>();
+            if (tilemapCollider != null) tilemapCollider.ProcessTilemapChanges();
+            var compositeCollider = tilemap.GetComponent<CompositeCollider2D>();
+            if (compositeCollider != null) compositeCollider.GenerateGeometry();
 
             var zones = new List<Transform>();
             var spots = new List<Transform>();
@@ -333,11 +342,17 @@ namespace ReflectiveAudio2D
             so.ApplyModifiedProperties();
         }
 
+        // Player scripts switched off during the estimation run, matched by class
+        // name so this file doesn't depend on any one game's player code.
+        private static readonly string[] FreezeTypeNames =
+            { "Player", "PlayerMovement", "PlayerAimAndShoot", "DemoPlayer2D" };
+
         // Fills the task's player references if they are empty: the player to move,
         // the FMOD listener the probe sound plays at, and the scripts to switch off.
+        // The player is the object tagged "Player", the same tag AcousticZone2D uses.
         private static void WirePlayer(SerializedObject so)
         {
-            var player = Object.FindAnyObjectByType<global::Player>();
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
             if (player == null) return;
 
             SetIfEmpty(so.FindProperty("playerRoot"), player.transform);
@@ -348,10 +363,14 @@ namespace ReflectiveAudio2D
             SerializedProperty freeze = so.FindProperty("disableWhileRunning");
             if (freeze != null && freeze.arraySize == 0)
             {
-                var aim = player.GetComponent<PlayerAimAndShoot>();
-                freeze.arraySize = aim != null ? 2 : 1;
-                freeze.GetArrayElementAtIndex(0).objectReferenceValue = player;
-                if (aim != null) freeze.GetArrayElementAtIndex(1).objectReferenceValue = aim;
+                var found = new List<MonoBehaviour>();
+                foreach (MonoBehaviour behaviour in player.GetComponents<MonoBehaviour>())
+                    if (behaviour != null && System.Array.IndexOf(FreezeTypeNames, behaviour.GetType().Name) >= 0)
+                        found.Add(behaviour);
+
+                freeze.arraySize = found.Count;
+                for (int i = 0; i < found.Count; i++)
+                    freeze.GetArrayElementAtIndex(i).objectReferenceValue = found[i];
             }
         }
 

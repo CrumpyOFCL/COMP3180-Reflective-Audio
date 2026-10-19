@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{3f789dc3-84be-4926-a2da-d7399cff9103}">
+		<property name="name">
+			<value>Track</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{3a92b896-680f-4378-805d-e39929f25cb7}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{3a92b896-680f-4378-805d-e39929f25cb7}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>6</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Foyer</value>
+			<value>Library</value>
+			<value>Greenhouse</value>
+			<value>BoilerRoom</value>
+			<value>AlchemyRoom</value>
+			<value>FinalRoom</value>
+		</property>
+	</object>
+</objects>

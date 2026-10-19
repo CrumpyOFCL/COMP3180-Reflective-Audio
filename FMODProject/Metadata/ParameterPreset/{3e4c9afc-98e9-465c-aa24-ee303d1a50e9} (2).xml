@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{3e4c9afc-98e9-465c-aa24-ee303d1a50e9}">
+		<property name="name">
+			<value>Element</value>
+		</property>
+		<relationship name="folder">
+			<destination>{bb7893c5-f8bd-46fb-a0bb-538b5b946d00}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{a69741a9-fdc9-4928-bd8a-07e9008f09b7}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{a69741a9-fdc9-4928-bd8a-07e9008f09b7}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>8</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Fire</value>
+			<value>Water</value>
+			<value>Earth</value>
+			<value>Air</value>
+			<value>Thunder</value>
+			<value>Toxic</value>
+			<value>Light</value>
+			<value>Dark</value>
+		</property>
+	</object>
+</objects>
